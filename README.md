@@ -124,7 +124,7 @@ You can also make this script always running when your machine is starting up. P
    User=root
    ExecStart=/usr/bin/python3 /home/<your_machine>/iota-websocket/<choose_armv7l_or_x86_64>/main.py
    Restart=always
-   Environment="PYTHONPATH=$PYTHONPATH:/home/surya/.local/lib/<python_version>/site-packages"
+   Environment="PYTHONPATH=$PYTHONPATH:/home/<your_machine>/.local/lib/<python_version>/site-packages"
    
    [Install]
    WantedBy=multi-user.target
