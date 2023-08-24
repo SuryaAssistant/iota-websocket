@@ -26,7 +26,7 @@ As default, this code work on `Chrysalis Devnet`. If you want to use in producti
 - Raspberry Pi OS 32-bit (tested)
 
 ## Prequerities
-- Python 3.x
+- Python 3.x (Python 3.10 is recommended)
 - pip
 
 ## Install Required Dependency
@@ -104,3 +104,46 @@ MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE/I0WPudLbpcrzJRIHQAG8TyOIIlgh/v7
 
 For prooving, you can go [here](https://8gwifi.org/ecsignverify.jsp)
 
+## Automatic Start Up with Systemmd
+You can also make this script always running when your machine is starting up. Please follow steps below:
+
+- Create iota-websocket.service
+  ```
+  sudo nano /etc/systemd/system/iota-websocket.service
+  ```
+
+- Add these lines. For raspberry pi, please choose armv7l.
+
+  Please change `<your_machine>` with your machine name and `<python_version>` with python3 that you are using, for example `python3.10`.
+   ```
+   [Unit]
+   Description=IOTA Websocket Service
+   After=network.target
+   
+   [Service]
+   User=root
+   ExecStart=/usr/bin/python3 /home/<your_machine>/iota-websocket/<choose_armv7l_or_x86_64>/main.py
+   Restart=always
+   Environment="PYTHONPATH=$PYTHONPATH:/home/surya/.local/lib/<python_version>/site-packages"
+   
+   [Install]
+   WantedBy=multi-user.target
+   ```
+   
+- Save using `CTRL+X`, followed by `Y` and `Enter`
+  
+- Reload daemon in terminal
+  ```
+  sudo systemtl daemon-reload
+  ```
+  
+- Enable service
+  ```
+  sudo systemctl enable iota-websocket.service
+  ```
+  
+- Start iota-websocket
+  ```
+  sudo systemctl start iota-websocket.service
+  ```
+  
